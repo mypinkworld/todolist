@@ -11,7 +11,7 @@
     "seed": "prisma db seed",
     "reset": "tsx prisma/reset.ts",
     "studio": "prisma studio",
-    "test": "dotenv -e .env.test -- cypress open --e2e --browser chrome",
+    "test": "dotenv -e .env.test -- npm run dev & cypress open --e2e --browser chrome",
     "test:push": "dotenv -e .env.test -- prisma db push"
   },
   "prisma": {
