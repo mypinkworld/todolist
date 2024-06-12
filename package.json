@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "push": "prisma db push",
+    "db-push": "prisma db push",
     "seed": "prisma db seed",
+    "reset": "tsx prisma/reset.ts",
     "studio": "prisma studio",
     "test": "cypress open"
   },
