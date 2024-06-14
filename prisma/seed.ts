@@ -1,16 +1,29 @@
 import { db } from "./db";
 
 async function main() {
-  await db.post.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      id: 1,
-      title: "Hello World",
-      content: "This is a test post",
-    //   authorId: 123, // Replace 123 with the actual authorId value
+  await db.todo.create({
+    data: {
+      title: 'First Todo',
+      completed: false,
     },
   });
+
+  await db.todo.create({
+    data: {
+      title: 'Second Todo',
+      completed: true,
+    },
+  });
+  const initialTodos = [
+    { title: "Köp kattmat", completed: false },
+    { title: "Köpa Blommor till Cissi", completed: true },
+    { title: "Kolla klart ARCANE", completed: false },
+  ];
+
+  await db.todo.createMany({
+    data: initialTodos,
+  });
+  
 } // man seedar för att testa databasen
 
 main()
