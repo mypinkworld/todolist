@@ -1,13 +1,19 @@
-describe("template spec", () => {
+describe("Todo List Page", () => {
   beforeEach(() => {
     cy.task("reseed");
   });
 
   it("passes", () => {
     cy.visit("/");
-    cy.get("h1").contains(" My todo list");
+    cy.get("h1").contains("My todo list");
     cy.contains("My List"); //kollar att det finns en todolist
     cy.contains("New Todo").should("exist"); //kollar att de finns en todo
+  });
+  it('should display todos', () => {
+    cy.get('div').should('have.length.at.least', 1); // att det finns en todo
+  });
+  it('should correctly mark a completed todo', () => {
+    cy.contains('span', 'Köp kattmat')
   });
   it("should delete a todo", () => {
     cy.visit("/");

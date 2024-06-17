@@ -1,21 +1,55 @@
 import { db } from "@/prisma/db";
+import { Checkbox, Button, TextField, Typography, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 
- 
 export default async function Home() {
-  const todos = await db.todo.findMany(); // Assuming your model is named 'todo'
+  // const todos = await db.todo.findMany();
 
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState('');
+  useEffect(() => {
+    const fetchTodos = async () => {
+      const response = await fetch('/api/todos');
+      const data = await response.json();
+      setTodos(data);
+    };
+    fetchTodos();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch('/api/todos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: newTodo }),
+    });
+    if (response.ok) {
+      const todo = await response.json();
+      setTodos([...todos, todos]);
+      setNewTodo(''); 
+    }
+  };
   return (
-    <main className="flex flex-col items-center justify-between p-4">
-      <h1 className="text-2xl font-bold text-gray-700 mb-8">
-      My todo list
-      </h1>
-
-      {todos.map((todo) => (
-        <div key={todo.id} className="flex items-center justify-between w-full p-2">
-          <span className={`text-lg ${todo.completed ? 'line-through' : ''}`}>{todo.title}</span>
-          <input type="checkbox" checked={todo.completed} readOnly />
-        </div>
-      ))}
-    </main>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'between', p: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        My todo list
+      </Typography>
+      <div>My List</div>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Add new todo"
+          variant="outlined"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          required
+        />
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+          Add Todo
+        </Button>
+      </form>
+          <Button variant="outlined">Delete</Button>
+          </Box>
   );
 }
