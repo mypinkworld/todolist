@@ -18,10 +18,10 @@ export async function deletedTodo(id: number) {
   revalidatePath("/");
 }
 
-export async function completeTodo(id: number) {
-    await db.todo.update({
-      where: { id: id },
-      data: { completed: true },
-    });
-    revalidatePath("/");
-  }
+// export async function completeTodo(id: number) {
+//     await db.todo.update({
+//       where: { id: id },
+//       data: { completed: true },
+//     });
+//     revalidatePath("/");
+//   }

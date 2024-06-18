@@ -25,6 +25,7 @@ const AddTodoForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         style={{ marginRight: '10px' }}
+        name="todo" // Lägger till name attributet
       />
       <TextField
         label="Description"
