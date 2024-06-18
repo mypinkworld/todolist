@@ -1,55 +1,30 @@
 import { db } from "@/prisma/db";
-import { Checkbox, Button, TextField, Typography, Box } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import { Todo } from "@prisma/client";
+import { useState, useEffect } from 'react';
+import { Button, Card, CardContent, TextField } from '@mui/material';
+import AddTodoForm from "./components/AddTodoForm";
 
 export default async function Home() {
-  // const todos = await db.todo.findMany();
+  const todos = await db.todo.findMany({});
 
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const response = await fetch('/api/todos');
-      const data = await response.json();
-      setTodos(data);
-    };
-    fetchTodos();
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch('/api/todos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title: newTodo }),
-    });
-    if (response.ok) {
-      const todo = await response.json();
-      setTodos([...todos, todos]);
-      setNewTodo(''); 
-    }
-  };
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'between', p: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
+    <main className="flex flex-col items-center justify-between p-4">
+      <h1>
         My todo list
-      </Typography>
-      <div>My List</div>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Add new todo"
-          variant="outlined"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          required
-        />
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-          Add Todo
-        </Button>
-      </form>
-          <Button variant="outlined">Delete</Button>
-          </Box>
+      </h1>
+      <Card variant="outlined" className="mb-4">
+        <CardContent>
+          <AddTodoForm />
+        </CardContent>
+      </Card>
+      {todos.map((todo) => (
+        <div key={todo.id} className="flex items-center justify-between w-full p-2">
+          <span className={`text-lg ${todo.completed ? 'line-through' : ''}`}>{todo.title}</span>
+          <div>
+            {/* <button onClick={() => deleteTodo(todo.id)}>Radera</button> */}
+          </div>
+        </div>
+      ))}
+    </main>
   );
 }
