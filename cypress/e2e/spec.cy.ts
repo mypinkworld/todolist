@@ -5,7 +5,7 @@ describe("Todo List Page", () => {
   afterEach(() => {
     cy.visit("/");
     cy.contains('button', 'Add Todo').click();
-    cy.get('input[name="todo"]').type('Köpa Kattmat');
+    cy.get('input[name="todo"]').type('Köpa Mat');
     cy.contains('button', 'Add Todo').click();
   });
   it("passes", () => {
