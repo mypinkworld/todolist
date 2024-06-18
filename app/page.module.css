@@ -6,6 +6,9 @@
   padding: 6rem;
   min-height: 100vh;
 }
+.list-title {
+  margin-bottom: 2rem; /* Justera detta värde efter önskat mellanrum */
+}
 
 .description {
   display: inherit;

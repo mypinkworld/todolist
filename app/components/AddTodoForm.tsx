@@ -20,7 +20,7 @@ const AddTodoForm = () => {
   return (
     <div>
       <TextField
-        label="Title"
+        label="New Todo"
         variant="outlined"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
