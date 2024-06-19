@@ -11,7 +11,11 @@ const DeleteTodoForm = ({ id }: { id: number }) => {
   return (
     <Button onClick={handleDeleteTodo}
      variant="contained"
-     sx={{ backgroundColor: 'pink', '&:hover': { backgroundColor: 'black' } }}>
+     sx={{
+      backgroundColor: 'pink',
+      '&:hover': { backgroundColor: 'black' },
+      boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.3)', // Lägger till skugga
+    }}>
       Delete Todo
     </Button>
   );
