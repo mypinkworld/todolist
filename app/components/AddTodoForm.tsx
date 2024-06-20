@@ -34,7 +34,7 @@ const AddTodoForm = () => {
         width: '200px', // Ökar bredden på textfältet
         mt: 1,
       }}
-      name="todo" // Lägger till name för att kunna testa
+      name="todo" 
     />
     <TextField
       label="Description"
@@ -44,8 +44,8 @@ const AddTodoForm = () => {
       sx={{
         width: '300px', // Ökar bredden på textfältet
         mt: 1, // margintop
-        
       }}
+      name="Description"
     />
     <Button
       variant="contained"

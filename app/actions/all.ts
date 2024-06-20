@@ -17,11 +17,14 @@ export async function deletedTodo(id: number) {
   await db.todo.delete({ where: { id: id } });
   revalidatePath("/");
 }
+// export async function getTodos() {
+//   return await db.todo.findMany();
+// }
 
-// export async function completeTodo(id: number) {
-//     await db.todo.update({
-//       where: { id: id },
-//       data: { completed: true },
-//     });
-//     revalidatePath("/");
-//   }
+export async function completeTodo(id: number) {
+  await db.todo.update({
+    where: { id: id },
+    data: { completed: true },
+  });
+  revalidatePath("/");
+}
