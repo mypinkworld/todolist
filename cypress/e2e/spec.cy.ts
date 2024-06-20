@@ -38,7 +38,8 @@ describe("Todo List Page", () => {
     });
     
     it("should be able to mark a todo as Completed", () => {
+      // Lägg till ett test för att markera en todo som slutförd om det är en del av funktionaliteten
       cy.contains('button', 'Completed').click();
-      cy.contains('First Todo').should('text-decoration', 'line-through'); // 
+      cy.contains('First Todo').should('text-decoration', 'line-through'); // Exempel på hur man kollar att en todo är markerad som slutförd
     });
 });

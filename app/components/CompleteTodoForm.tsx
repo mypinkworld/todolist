@@ -6,7 +6,6 @@ import { completeTodo } from '../actions/all'; // completeTodo func actions all
 const CompletedTodoForm = ({ id }: { id: number }) => {
   const handleCompletedTodo = async () => {
     await completeTodo(id);
-    // Om du behöver revalidera eller uppdatera UI efter att en todo har markerats som slutförd, gör det här
   };
 
   return (
