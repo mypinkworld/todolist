@@ -23,20 +23,23 @@ describe("Todo List Page", () => {
     cy.contains("Mjölk, Honung").should("exist"); //kollar att det finns en beskrivning
   });
 
-  // it("should be able to delete an existing todo", () => {
-  //   // Antag att "Köp kattmat" är den todo vi vill ta bort
-  //   cy.contains("Köp kattmat").should("be.visible");
-  //   // Klicka på borttagningsknappen för "Köp kattmat"
-  //   // Antag att varje todo har en associerad 'Delete' knapp. Du kan behöva använda en mer specifik selektor här.
-  //   cy.get('input[name="delete"]').type('Köp kattmat');
-  //   cy.contains('Köp kattmat').parent().contains('button', 'Delete Todo').click();
-  //   cy.contains("Köp kattmat").should("not.exist");
-  // });
-    it('should open a confirmation dialog when attempting to delete a todo', () => {
-      cy.contains('.todo-item', 'Köp kattmat').find('.delete-btn').click();
-      cy.contains("Are you sure you want to delete?").should('exist');
-      cy.contains('button', 'Yes').click();
-      cy.contains('button', 'Delete Todo').click();
+  it("should not allow adding a New Todo with an empty string", () => {
+    cy.contains('button', 'Add Todo').click();
+    cy.get('[data-cy="todo-error"]').should('contain', 'New Todo cannot be empty');
+    cy.contains('New Todo cannot be empty').should('exist');
+  });
+  
+  it('should display an error for New Todo longer than 10 letters', () => {
+    cy.get('input[name="todo"]').type('LongerThanTenCharacters');
+    cy.get('button').contains('Add Todo').click();
+    cy.get('[data-cy="todo-error"]').should('contain', 'Todo cannot be more than 10 letters');
+  });
+
+  it('should open a confirmation dailog when trying to delete a todo', () => {
+    cy.contains('.todo-item', 'Köp kattmat').find('.delete-btn').click();
+    cy.contains("Are you sure you want to delete?").should('exist');
+    cy.contains('button', 'Yes').click();
+    cy.contains('button', 'Delete Todo').click();
   });
 
   it("should display the 'Add Todo' button", () => {

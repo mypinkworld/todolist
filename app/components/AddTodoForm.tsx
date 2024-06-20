@@ -1,20 +1,29 @@
 "use client";
 import { useState } from 'react';
 import { PrismaClient } from '@prisma/client';
-import { TextField, Button, Box } from '@mui/material';
+import { TextField, Button, Box, Typography} from '@mui/material';
 import { createTodo } from '../actions/all';
 
 const AddTodoForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [error, setError] = useState('');
 
   const handleAddTodo = async () => {
-    if (!title) return;
+    if (!title) {
+      setError('New Todo cannot be empty');
+      return;
+    }
+
+    if (title.length > 10) {
+      setError('Todo cannot be more than 10 letters');
+      return;
+    }
 
     await createTodo(title, description);
-
     setTitle('');
     setDescription('');
+    setError(''); 
   };
 
   return (
@@ -25,13 +34,15 @@ const AddTodoForm = () => {
     justifyContent: 'center',
     gap: '10px',
   }}>
+    {error && <Typography color="error" className="error-message" data-cy= "todo-error">{error}</Typography>}
     <TextField
       label="New Todo"
       variant="outlined"
       value={title}
       onChange={(e) => setTitle(e.target.value)}
+      error={!!error}
       sx={{
-        width: '200px', // Ökar bredden på textfältet
+        width: '200px', 
         mt: 1,
       }}
       name="todo" 
@@ -42,8 +53,8 @@ const AddTodoForm = () => {
       value={description}
       onChange={(e) => setDescription(e.target.value)}
       sx={{
-        width: '300px', // Ökar bredden på textfältet
-        mt: 1, // margintop
+        width: '300px',
+        mt: 1, 
       }}
       name="Description"
     />
